@@ -27,20 +27,20 @@ func (a Float) Less(b QItem) bool {
 	return false
 }
 
-type Node struct {
+type BinaryNode struct {
 	value QItem
-	children []*Node
+	children []*BinaryNode
 }
 
-func MakeNode(val QItem) *Node {
-	return & Node{
+func MakeBinaryNode(val QItem) *BinaryNode {
+	return & BinaryNode{
 		value:val,
-		children:make([]*Node, 2),
+		children:make([]*BinaryNode, 2),
 	}
 }
 
 type BinaryTree struct {
-	root *Node
+	root *BinaryNode
 	height int
 }
 
@@ -53,9 +53,9 @@ func MakeBinaryTree() *BinaryTree {
 
 
 
-func recursiveInsert(parent *Node, value QItem) *Node {
+func recursiveInsert(parent *BinaryNode, value QItem) *BinaryNode {
 	if parent == nil {
-		return MakeNode(value)
+		return MakeBinaryNode(value)
 	} else {
 		whichIndex := 0
 		if value.Less(parent.value) {
@@ -73,7 +73,7 @@ func recursiveInsert(parent *Node, value QItem) *Node {
 
 func (self *BinaryTree)Insert(value QItem) {
 	if self.root == nil {
-		self.root = MakeNode(value)
+		self.root = MakeBinaryNode(value)
 	} else {
 		recursiveInsert(self.root, value)
 	}
@@ -85,7 +85,7 @@ func (self *BinaryTree) Print() {
 	}
 }
 
-func recursivePrint(parent *Node, level int) {
+func recursivePrint(parent *BinaryNode, level int) {
 	if parent != nil {
 		recursivePrint(parent.children[1], level + 1)
 		for i := 0; i < level; i++ {
